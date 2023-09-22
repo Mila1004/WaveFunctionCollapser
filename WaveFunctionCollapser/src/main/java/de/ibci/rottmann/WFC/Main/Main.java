@@ -2,6 +2,6 @@ package de.ibci.rottmann.WFC.Main;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Main.main()");
+        MainApp.main(args);
     }
 }
