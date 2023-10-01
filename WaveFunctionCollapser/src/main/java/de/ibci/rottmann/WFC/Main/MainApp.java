@@ -1,6 +1,6 @@
 package de.ibci.rottmann.WFC.Main;
 
-import de.ibci.rottmann.WFC.Control.AllController;
+import de.ibci.rottmann.WFC.Control.SingletonAllController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -9,8 +9,9 @@ import java.awt.geom.Dimension2D;
 import java.util.Locale;
 
 public class MainApp extends Application {
-    private AllController AllController;
-
+    private static Dimension2D screenDimension;
+    private static Stage startStage;
+    private SingletonAllController singletonAllControllerInstance;
     public static void main(String[] args) {
         Application.launch(args);
     }
@@ -23,11 +24,21 @@ public class MainApp extends Application {
             String tmpJavaVersion = System.getProperty("java.version");
             System.out.println("Java Version: " + tmpJavaVersion);
             //ToDo: logging
-            Dimension2D tmpScreenDimension = Toolkit.getDefaultToolkit().getScreenSize();
-            System.out.println("Debug: " + tmpScreenDimension);
-            this.AllController = new AllController(primaryStage, tmpScreenDimension);
+            screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
+            startStage = primaryStage;
+            System.out.println("Debug: " + screenDimension);
+            this.singletonAllControllerInstance = SingletonAllController.getInstance();
+            this.singletonAllControllerInstance.initAllView();
         } catch (RuntimeException anException) {
             System.out.println(anException);
         }
+    }
+
+    public static Dimension2D getScreenDimension() {
+        return screenDimension;
+    }
+
+    public static Stage getPrimaryStage() {
+        return startStage;
     }
 }
